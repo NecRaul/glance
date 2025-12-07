@@ -12,7 +12,8 @@ type SearchBang struct {
 	Title    string
 	Shortcut string
 	URL      string
-	RawQuery bool `yaml:"raw-query"`
+	RawQuery bool    `yaml:"raw-query"`
+	Regex    string
 }
 
 type searchWidget struct {

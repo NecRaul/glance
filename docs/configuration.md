@@ -1271,6 +1271,7 @@ What now? [Bangs](https://duckduckgo.com/bangs). They're shortcuts that allow yo
 | shortcut | string | yes | |
 | url | string | yes | |
 | raw-query | boolean | no | false |
+| regex | string | no | |
 
 ###### `title`
 Optional title that will appear on the right side of the search bar when the query starts with the associated shortcut.
@@ -1295,6 +1296,7 @@ url: https://www.amazon.com/s?k={QUERY}
 ```
 
 ###### `raw-query`
+
 Optional boolean that determines whether the query is inserted raw (without URL encoding) into the URL.
 
 > ```yaml
@@ -1329,6 +1331,43 @@ would result in
 
 ```
 https://github.com/glanceapp/glance
+```
+
+###### `regex`
+
+Optional regular expression that extracts multiple values from the query. If provided, the regex is applied to the query after removing the bang shortcut.
+
+Example: 
+
+```yaml
+- title: Google Translate
+  shortcut: "!tl"
+  regex: "^(\\w+):(\\w+)\\s+(.+)$"
+  url: "https://translate.google.com/?sl={QUERY}&tl={QUERY}&text={QUERY}&op=translate"
+```
+
+Typing
+
+```
+!tl en:fr hello world
+```
+
+would result in final URL being
+
+```
+https://translate.google.com/?sl=en&tl=fr&text=hello%20world&op=translate
+```
+
+and 
+
+```
+!tl auto:en bonjour le monde
+```
+
+would result in final URL being
+
+```
+https://translate.google.com/?sl=auto&tl=en&text=bonjour%20le%20monde&op=translate
 ```
 
 ### Group
